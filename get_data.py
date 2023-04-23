@@ -1,15 +1,20 @@
 import xml.etree.ElementTree as ET
+import re
 
 
-def get_data():
-    ...
+def get_data(path):
+    tree = ET.parse(path)
+    root = tree.getroot()
+
+    namespaces = {'nfe': 'http://www.portalfiscal.inf.br/nfe'}
+    det_elements = root.findall('.//nfe:det', namespaces)
+
+    return det_elements
+    # for det in det_elements:
+        # print(ET.tostring(det, encoding='utf-8').decode('utf-8'))
 
 
-tree = ET.parse("nota2.xml")
-root = tree.getroot()
 
-# Print the contents of the XML file
-for child in root:
-    print(child.tag, child.attrib)
-    for subchild in child:
-        print("\t", subchild.tag, subchild.text)
+def clean_data(data):
+    # data_string = ET.tostring(data, encoding='utf-8').decode('utf-8')
+    return data.text
